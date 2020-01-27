@@ -14,8 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jhei.cursomc.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -32,7 +31,6 @@ public class Cliente implements Serializable {
 	
 	// somente incluir a referência do cliente para o endereco 
 	//deve ser com o mesmo nome da variavel da classe endereco
-	@JsonManagedReference // libera para mostrar o json
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -42,7 +40,7 @@ public class Cliente implements Serializable {
 	private Set<String>  telefones = new HashSet<>();
 	
 	// @JsonBackReference diz que os pedidos do cliente não serão serializados
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy="cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
