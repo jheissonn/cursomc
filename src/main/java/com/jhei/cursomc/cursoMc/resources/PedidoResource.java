@@ -1,5 +1,7 @@
 package com.jhei.cursomc.cursomc.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +21,12 @@ public class PedidoResource {
 	PedidoService service;
 	
 	@GetMapping
-	public ResponseEntity<?> listar() {		
+	public ResponseEntity<List<Pedido>> listar() {		
 		return ResponseEntity.ok().body(service.buscar());
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
 		Pedido obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
