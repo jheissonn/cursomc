@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -31,7 +32,8 @@ public class Cliente implements Serializable {
 	
 	// somente incluir a referência do cliente para o endereco 
 	//deve ser com o mesmo nome da variavel da classe endereco
-	@OneToMany(mappedBy="cliente")
+	// cascade=CascadeType.ALL sempre altera em casacata os enderecos
+	@OneToMany(mappedBy="cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	//cria a table aocm o nome TELEFONE
