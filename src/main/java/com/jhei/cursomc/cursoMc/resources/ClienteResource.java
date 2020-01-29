@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jhei.cursomc.cursomc.domain.Cliente;
 import com.jhei.cursomc.cursomc.dto.ClienteDTO;
+import com.jhei.cursomc.cursomc.dto.ClienteNewDTO;
 import com.jhei.cursomc.cursomc.services.ClienteService;
 
 @RestController
@@ -28,24 +29,24 @@ import com.jhei.cursomc.cursomc.services.ClienteService;
 public class ClienteResource {
 
 	@Autowired
-	ClienteService categoriaService;
+	ClienteService clienteService;
 	
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> findAll() {		
-		List<Cliente> list = categoriaService.find();
+		List<Cliente> list = clienteService.find();
 		List<ClienteDTO> listDto = list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
-		Cliente obj = categoriaService.find(id);
+		Cliente obj = clienteService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO obj) {		
-		Cliente retorno = categoriaService.insert(categoriaService.fromDto(obj));
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO obj) {		
+		Cliente retorno = clienteService.insert(clienteService.fromDto(obj));
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(retorno.getId()).toUri();
@@ -55,13 +56,13 @@ public class ClienteResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO	obj, @PathVariable Integer id) {
 		obj.setId(id);
-		categoriaService.update(categoriaService.fromDto(obj));
+		clienteService.update(clienteService.fromDto(obj));
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-	    categoriaService.delete(id);
+		clienteService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -71,7 +72,7 @@ public class ClienteResource {
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {		
-		Page<Cliente> list = categoriaService.findPage(page, linesPerPage, orderBy, direction);
+		Page<Cliente> list = clienteService.findPage(page, linesPerPage, orderBy, direction);
 		
 		Page<ClienteDTO> listDto = list.map(obj -> new ClienteDTO(obj));
 		
