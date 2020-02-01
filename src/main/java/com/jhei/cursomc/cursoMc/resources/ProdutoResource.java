@@ -18,7 +18,7 @@ import com.jhei.cursomc.cursomc.services.ProdutoService;
 
 @RestController
 @RequestMapping(value="/produtos")
-public class ProdutosResource {
+public class ProdutoResource {
 
 	@Autowired
 	ProdutoService service;
