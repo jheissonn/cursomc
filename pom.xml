@@ -11,7 +11,7 @@
 	<groupId>com.jhei.cursomc</groupId>
 	<artifactId>cursomc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cursoMc</name>
+	<name>cursomc</name>
 	<description>Projeto do curso udemy</description>
 
 	<properties>
