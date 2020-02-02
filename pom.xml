@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jhei.cursomc</groupId>
-	<artifactId>cursoMc</artifactId>
+	<artifactId>cursomc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cursoMc</name>
 	<description>Projeto do curso udemy</description>
