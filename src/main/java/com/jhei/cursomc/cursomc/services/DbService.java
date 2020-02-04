@@ -20,6 +20,7 @@ import com.jhei.cursomc.cursomc.domain.PagamentoComCartao;
 import com.jhei.cursomc.cursomc.domain.Pedido;
 import com.jhei.cursomc.cursomc.domain.Produto;
 import com.jhei.cursomc.cursomc.domain.enums.EstadoPagamento;
+import com.jhei.cursomc.cursomc.domain.enums.Perfil;
 import com.jhei.cursomc.cursomc.domain.enums.TipoCliente;
 import com.jhei.cursomc.cursomc.repositories.CategoriaRepository;
 import com.jhei.cursomc.cursomc.repositories.CidadeRepository;
@@ -110,15 +111,20 @@ public class DbService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
-		Cliente cli1 = new Cliente (null, "Maria Silva", "jh.eison@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA, encoderPassword.encode("123"));
+		Cliente cli1 = new Cliente (null, "Maria Silva", "jh.eison@hotmail.com", "83769391063", TipoCliente.PESSOAFISICA, encoderPassword.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Cliente cli2 = new Cliente (null, "Ana costa", "jh.seison@hotmail.com", "53550516002", TipoCliente.PESSOAFISICA, encoderPassword.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+		cli2.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
 		Endereco e1 = new Endereco(null, "Rua flores", "300", "Apt 303", "Jardim", "38220834", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida matos", "105", "Sala 800", "Centro", "38777012", cli1, c1);
-		
+		Endereco e3 = new Endereco(null, "Avenida matoss", "10205", "Sala 90", "Centro", "50818", cli2, c2);
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
-		
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
