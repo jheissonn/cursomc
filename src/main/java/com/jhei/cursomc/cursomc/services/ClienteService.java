@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jhei.cursomc.cursomc.domain.Cidade;
@@ -33,6 +34,8 @@ public class ClienteService {
 	private CidadeRepository repoCidade;
 	@Autowired
 	private EnderecoRepository endRepo;
+	@Autowired
+	private BCryptPasswordEncoder encoderPassword;
 	
 	public Cliente find(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
@@ -72,11 +75,11 @@ public class ClienteService {
 	}  
 	
 	public Cliente fromDto(ClienteDTO obj) {
-		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(),null , null);
+		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(),null , null, null);
 	}
 	
 	public Cliente fromDto(ClienteNewDTO obj) {
-		Cliente cli = new Cliente(null, obj.getNome(), obj.getEmail(),obj.getCpfoucnpj() , TipoCliente.toEnum(obj.getTipo()));
+		Cliente cli = new Cliente(null, obj.getNome(), obj.getEmail(),obj.getCpfoucnpj() , TipoCliente.toEnum(obj.getTipo()), encoderPassword.encode(obj.getSenha()));
 		Optional<Cidade> cid = repoCidade.findById(obj.getCidadeId());
 		Endereco end = new Endereco(null, obj.getLogradouro(), obj.getNumero(), obj.getComplemento(),
 				obj.getBairro(), obj.getCep(), cli, cid.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!")));

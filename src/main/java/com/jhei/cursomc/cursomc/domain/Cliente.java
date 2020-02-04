@@ -31,6 +31,8 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String cpfoucnpj;
 	private Integer tipo;
+	@JsonIgnore
+	private String senha;
 	
 	// somente incluir a referência do cliente para o endereco 
 	//deve ser com o mesmo nome da variavel da classe endereco
@@ -52,13 +54,14 @@ public class Cliente implements Serializable {
 		
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfoucnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfoucnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.nome = nome;
 		this.cpfoucnpj = cpfoucnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCod();
+		this.senha = senha;
 	}
 
 	public Integer getId() {
@@ -109,6 +112,30 @@ public class Cliente implements Serializable {
 		this.telefones = telefones;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -134,19 +161,4 @@ public class Cliente implements Serializable {
 		return true;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
 }
