@@ -14,12 +14,15 @@ import org.springframework.stereotype.Service;
 import com.jhei.cursomc.cursomc.domain.Cidade;
 import com.jhei.cursomc.cursomc.domain.Cliente;
 import com.jhei.cursomc.cursomc.domain.Endereco;
+import com.jhei.cursomc.cursomc.domain.enums.Perfil;
 import com.jhei.cursomc.cursomc.domain.enums.TipoCliente;
 import com.jhei.cursomc.cursomc.dto.ClienteDTO;
 import com.jhei.cursomc.cursomc.dto.ClienteNewDTO;
 import com.jhei.cursomc.cursomc.repositories.CidadeRepository;
 import com.jhei.cursomc.cursomc.repositories.ClienteRepository;
 import com.jhei.cursomc.cursomc.repositories.EnderecoRepository;
+import com.jhei.cursomc.cursomc.security.UserSS;
+import com.jhei.cursomc.cursomc.services.exceptions.AuthorizationException;
 import com.jhei.cursomc.cursomc.services.exceptions.DataIntegrityException;
 import com.jhei.cursomc.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -38,6 +41,10 @@ public class ClienteService {
 	private BCryptPasswordEncoder encoderPassword;
 	
 	public Cliente find(Integer id) {
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Cliente> obj = repo.findById(id);
 		return  obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! id:" + id + ", Tipo" + Cliente.class.getName()));
 	}
