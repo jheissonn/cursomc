@@ -114,7 +114,7 @@ public class DbService {
 		Cliente cli1 = new Cliente (null, "Maria Silva", "jh.eison@hotmail.com", "83769391063", TipoCliente.PESSOAFISICA, encoderPassword.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		
-		Cliente cli2 = new Cliente (null, "Ana costa", "jh.seison@hotmail.com", "53550516002", TipoCliente.PESSOAFISICA, encoderPassword.encode("123"));
+		Cliente cli2 = new Cliente (null, "Ana costa", "nelio@hotmail.com", "53550516002", TipoCliente.PESSOAFISICA, encoderPassword.encode("123"));
 		cli2.addPerfil(Perfil.ADMIN);
 		cli2.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		
