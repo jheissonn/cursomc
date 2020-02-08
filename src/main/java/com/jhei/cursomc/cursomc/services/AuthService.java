@@ -26,14 +26,14 @@ public class AuthService {
 	public void sendNewPassword(String email) {
 		Cliente cliente = clienteRepository.findByEmail(email);
 		
-		if(cliente == null) {
+		if(cliente == null) { // se o email não existe
 			throw new ObjectNotFoundException("Email não encontrado");
 		}
 		
-		String newPass = newPassword();
-		cliente.setSenha(pe.encode(newPass));
-		clienteRepository.save(cliente);
-		emailService.sendNewPasswordEmail(cliente, newPass);
+		String newPass = newPassword(); // gera uma nova senha
+		cliente.setSenha(pe.encode(newPass)); // salva a senha criptografada
+		clienteRepository.save(cliente); // salva nova senha
+		emailService.sendNewPasswordEmail(cliente, newPass); // envia email
 	}
 
 	private String newPassword() {
