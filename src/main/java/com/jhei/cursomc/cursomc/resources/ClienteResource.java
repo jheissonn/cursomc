@@ -27,7 +27,7 @@ import com.jhei.cursomc.cursomc.dto.ClienteNewDTO;
 import com.jhei.cursomc.cursomc.services.ClienteService;
 
 @RestController
-@RequestMapping(value="/clientes")
+@RequestMapping(value="/cliente")
 public class ClienteResource {
 
 	@Autowired
@@ -46,6 +46,11 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@RequestMapping(value="/email", method=RequestMethod.GET)
+	public ResponseEntity<Cliente> find(@RequestParam(value="value") String email) {
+		Cliente obj = clienteService.findByEmail(email);
+		return ResponseEntity.ok().body(obj);
+	}
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO obj) {		
 		Cliente retorno = clienteService.insert(clienteService.fromDto(obj));
